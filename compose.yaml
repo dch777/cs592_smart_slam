@@ -1,0 +1,22 @@
+services:
+  simulator:
+    build: .
+    network_mode: "host"
+    volumes:
+      - .:/ros2_ws
+      - /tmp/.X11-unix:/tmp/.X11-unix
+
+    stdin_open: true
+    tty: true
+    privileged: true
+
+    environment:
+      DISPLAY: :0
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]

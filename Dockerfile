@@ -23,6 +23,9 @@ RUN apt-get -y install ninja-build
 RUN apt-get -y install wayland-protocols
 RUN apt-get -y install libxkbcommon-dev
 RUN apt-get -y install libwayland-dev
+RUN apt-get -y install libboost-python-dev
+
+RUN apt-get -y install vim tmux
 
 RUN git clone --recursive https://github.com/stevenlovegrove/Pangolin
 WORKDIR /Pangolin/
@@ -37,8 +40,9 @@ WORKDIR /
 COPY requirements.txt requirements.txt
 RUN pip3 install -r requirements.txt
 
-COPY . /ros2_ws/
+RUN mkdir /ros2_ws/
+COPY . /ros2_ws/src
 WORKDIR /ros2_ws/
-RUN bash /ros2_ws/build.sh
+RUN bash /ros2_ws/src/build.sh
 
-CMD /ros2_ws/run.sh
+CMD /ros2_ws/src/run.sh

@@ -8,7 +8,6 @@ RUN apt-get -y update
 
 RUN apt-get -y install python3-pip
 RUN apt-get -y install xserver-xorg-video-nouveau
-RUN apt-get -y install libeigen3-dev
 
 RUN apt-get -y install ros-humble-ros-gz
 RUN apt-get -y install ros-humble-slam-toolbox
@@ -16,10 +15,30 @@ RUN apt-get -y install ros-humble-navigation2 ros-humble-nav2-bringup
 RUN apt-get -y install ros-humble-turtlebot3*
 RUN apt-get -y install ros-humble-dynamixel-sdk
 
+RUN apt-get -y install libeigen3-dev
+RUN apt-get -y install libepoxy-dev
+RUN apt-get -y install libc++-dev
+RUN apt-get -y install libegl1-mesa-dev
+RUN apt-get -y install ninja-build
+RUN apt-get -y install wayland-protocols
+RUN apt-get -y install libxkbcommon-dev
+RUN apt-get -y install libwayland-dev
+
+RUN git clone --recursive https://github.com/stevenlovegrove/Pangolin
+WORKDIR /Pangolin/
+RUN cmake -B build
+RUN cmake --build build -j8
+RUN cmake --install build
+
+ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib/local"
+RUN ldconfig
+
+WORKDIR /
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
+
 COPY . /ros2_ws/
 WORKDIR /ros2_ws/
-
-RUN pip3 install -r requirements.txt
 RUN bash /ros2_ws/build.sh
 
 CMD /ros2_ws/run.sh

@@ -44,8 +44,8 @@ def generate_launch_description():
                 )
             ),
             launch_arguments={
-                "x_pose": "-5.0",
-                "y_pose": "5.0"
+                "x_pose": "0.0",
+                "y_pose": "0.0"
             }.items()
         )
     ])

@@ -5,7 +5,8 @@
 # ros2 launch slam_toolbox online_async_launch.py use_sim_time:=True & >/dev/null
 # ros2 run rviz2 rviz2 -d /opt/ros/humble/share/nav2_bringup/rviz/nav2_default_view.rviz & >/dev/null
 
+source /usr/share/gazebo/setup.sh
 source ./install/setup.bash
-tmux new-session -d -s launch 'ros2 launch smart_slam orb_slam3_launch.py'
+tmux new-session -d -s launch 'ros2 launch smart_slam smart_slam_launch.py'
 
 bash

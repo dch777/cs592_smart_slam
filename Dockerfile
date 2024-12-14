@@ -24,25 +24,26 @@ RUN apt-get -y install wayland-protocols
 RUN apt-get -y install libxkbcommon-dev
 RUN apt-get -y install libwayland-dev
 RUN apt-get -y install libboost-python-dev
+RUN apt-get -y install libunwind-dev
+RUN apt-get -y install ros-humble-libg2o
+RUN apt-get -y install ros-humble-pcl-ros
+RUN apt-get -y install pcl-tools
 
 RUN apt-get -y install vim tmux
-
-RUN git clone --recursive https://github.com/stevenlovegrove/Pangolin
-WORKDIR /Pangolin/
-RUN cmake -B build
-RUN cmake --build build -j8
-RUN cmake --install build
 
 ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib/local"
 RUN ldconfig
 
-WORKDIR /
-COPY requirements.txt requirements.txt
-RUN pip3 install -r requirements.txt
-
 RUN mkdir /ros2_ws/
-COPY . /ros2_ws/src
 WORKDIR /ros2_ws/
+
+COPY build_deps.sh build_deps.sh
+RUN bash /ros2_ws/build_deps.sh
+
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt -v
+
+COPY . /ros2_ws/src
 RUN bash /ros2_ws/src/build.sh
 
 CMD /ros2_ws/src/run.sh

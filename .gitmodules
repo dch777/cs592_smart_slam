@@ -1,3 +1,11 @@
 [submodule "stella_vslam_ros"]
 	path = stella_vslam_ros
 	url = https://github.com/stella-cv/stella_vslam_ros.git
+[submodule "aws-robomaker-bookstore-world"]
+	path = aws-robomaker-bookstore-world
+	url = https://github.com/aws-robotics/aws-robomaker-bookstore-world.git
+	branch = ros2
+[submodule "aws-robomaker-small-house-world"]
+	path = aws-robomaker-small-house-world
+	url = https://github.com/aws-robotics/aws-robomaker-small-house-world.git
+	branch = ros2
